@@ -1,2 +1,6 @@
 system/storage/logs*
 /system/storage/cache/
+/.idea/encodings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/tochka.iml
