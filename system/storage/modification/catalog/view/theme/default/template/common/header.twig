@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+{% if alternate %}{{ alternate }}{% endif %} 	
+			
+
+{% if canonical_link %}{{ '<link href="'~canonical_link~'" rel="canonical" />' }}{% endif %} 
+{% if robots %}{{ robots }}{% endif %} 
+			
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<script src="catalog/view/javascript/jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+<link href="catalog/view/theme/default/stylesheet/theme.css" rel="stylesheet">
+{% for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{% endfor %}
+{% for script in scripts %}
+<script src="{{ script }}" type="text/javascript"></script>
+{% endfor %}
+<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/jquery.inputmask.min.js" type="text/javascript"></script>
+<script src="catalog/view/javascript/ajax.js" type="text/javascript"></script>
+{% for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{% endfor %}
+{% for analytic in analytics %}
+{{ analytic }}
+{% endfor %}
+
+			<link rel="stylesheet" href="catalog/view/javascript/jquery.cluetip.css" type="text/css" />
+			<script src="catalog/view/javascript/jquery.cluetip.js" type="text/javascript"></script>
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+				$('a.title').cluetip({splitTitle: '|'});
+				  $('ol.rounded a:eq(0)').cluetip({splitTitle: '|', dropShadow: false, cluetipClass: 'rounded', showtitle: false});
+				  $('ol.rounded a:eq(1)').cluetip({cluetipClass: 'rounded', dropShadow: false, showtitle: false, positionBy: 'mouse'});
+				  $('ol.rounded a:eq(2)').cluetip({cluetipClass: 'rounded', dropShadow: false, showtitle: false, positionBy: 'bottomTop', topOffset: 70});
+				  $('ol.rounded a:eq(3)').cluetip({cluetipClass: 'rounded', dropShadow: false, sticky: true, ajaxCache: false, arrows: true});
+				  $('ol.rounded a:eq(4)').cluetip({cluetipClass: 'rounded', dropShadow: false});  
+				});
+			</script>
+			
+
+				{% if socialseo %}{{ socialseo }}{% endif %} 
+				
+				{% if richsnippets.store %} 
+<script type="application/ld+json">
+				{ "@context" : "http://schema.org",
+				  "@type" : "Organization",
+				  "name" : "{{ name }}",
+				  "url" : "{{ home }}",
+				  "logo" : "{{ logo }}",
+				  "contactPoint" : [
+					{ "@type" : "ContactPoint",
+					  "telephone" : "{{ telephone }}",
+					  "contactType" : "customer service"
+					} ] }
+				</script>
+				{% endif %} 				
+			
+</head>
+<body>
+<div class="wrapper-body">
+{# ** form ** #}
+<div class="layer"></div>
+<div class="form-wrap">
+    <p class="form-capt">Заказать звонок</p>
+
+    <p class="form-txt">Оставьте пожалуйста свои контактные данные. Наши менеджеры свяжутся с вами для уточнения деталей заказа</p>
+    <form class="modform" action="" method="POST">
+        <label for="form-name">Ваше имя*</label>
+        <input class="form-input-txt" value="" name="form-name" placeholder="Как к вам обращаться">
+        <label for="form-tel">Телефон*</label>
+        <input class="form-input-txt form-phone" value="" name="form-tel" placeholder="+7(000) 000 00 00">
+        <input type="submit" class="form-input-submit" value="Отправить">
+        <!--вставка фронта-->
+        <div class="g-recaptcha" data-sitekey="6LdPDxYbAAAAAFEq5lpQuvDXZ_90KuNW6GAgcm6R"></div>
+        <div class="text-danger" id="recaptchaError"></div>
+        <p class="form-politika">Нажатием кнопки "Отправить" я даю свое согласие на обработку <a href="#">персональных данных</a></p>
+    </form>
+
+
+    <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve" width="16px" height="16px" class=""><g><g>
+                <g>
+                    <path d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#666666"/>
+                </g>
+            </g></g> </svg>
+    <!--капча-->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+</div>
+<div class="form-alert1">
+    <p class="form-capt">Спасибо, форма отправлена!</p>
+    <p class="form-txt">Наши менеджеры свяжутся с вами в ближайшее время.</p>
+    <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve" width="16px" height="16px" class=""><g><g>
+                <g>
+                    <path d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#666666"/>
+                </g>
+            </g></g> </svg>
+</div>
+<div class="form-alert2">
+    <p class="form-capt">Ошибка!</p>
+    <p class="form-txt">При заполнении формы произошла ошибка. Проверьте правильность заполнения полей формы.</p>
+    <svg version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve" width="16px" height="16px" class=""><g><g>
+                <g>
+                    <path d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285    L284.286,256.002z" data-original="#000000" class="active-path" data-old_color="#000000" fill="#666666"/>
+                </g>
+            </g></g> </svg>
+</div>
+
+{# ** form end ** #}
+<nav id="top">
+  <div class="container">{{ currency }}
+    {{ language }}
+    <div id="top-links" class="nav pull-right">
+      <ul class="list-inline">
+        <li><a href="{{ contact }}"><i class="fa fa-phone"></i></a> <span class="hidden-xs hidden-sm hidden-md">{{ telephone }}</span></li>
+        <li class="dropdown"><a href="{{ account }}" title="{{ text_account }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_account }}</span> <span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-menu-right">
+            {% if logged %}
+            <li><a href="{{ account }}">{{ text_account }}</a></li>
+            <li><a href="{{ order }}">{{ text_order }}</a></li>
+            <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+            <li><a href="{{ download }}">{{ text_download }}</a></li>
+            <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+            {% else %}
+            <li><a href="{{ register }}">{{ text_register }}</a></li>
+            <li><a href="{{ login }}">{{ text_login }}</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        <li><a href="{{ wishlist }}" id="wishlist-total" title="{{ text_wishlist }}"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_wishlist }}</span></a></li>
+        <li><a href="{{ shopping_cart }}" title="{{ text_shopping_cart }}"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_shopping_cart }}</span></a></li>
+        <li><a href="{{ checkout }}" title="{{ text_checkout }}"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md">{{ text_checkout }}</span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <div id="logo">
+            {% if logo %}
+            <a href="{{ home }}">
+                <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                </a>
+            {% else %}
+                <h1>
+                    <a href="{{ home }}">{{ name }}</a>
+                </h1>
+            {% endif %}
+        </div>
+          <div class="site-name">
+              {{ name }}
+          </div>
+      </div>
+      <div class="col-md-6 col-sm-5">
+          <div class="header-contacts-wrap">
+              <div class="header-contacts-1">
+                  Продажа лучшей электротехнической продукции
+              </div>
+              <div class="header-contacts-2">
+                  <div class="header-time time-1">Время работы</div>
+                  <div class="header-time time-2">Пн-Пт 9:00 - 18:00</div>
+                  <div class="header-time time-3">Сб-Вс Выходной</div>
+              </div>
+              <div class="header-contacts-3">
+                  <div class="place-1">г. Омск</div>
+                  <div class="place-2">ул. Ватутина, 11в , 2 этаж, 9 офис</div>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-2 col-sm-3">
+          <div class="header-phone"><a href="tel:{{ (telephone) }}">{{ (telephone) }}</a></div>
+          <div class="main-header__mid-phone-callback button-click">Перезвоните мне</div>
+          <div class="clearfix"></div>
+          <div class="cart-wrap">{{ cart }}</div>
+      </div>
+
+    </div>
+  </div>
+</header>
+{{ menu }}
+
+<div class="container">
+    {#<pre>
+    {{ dump(title) }}
+        </pre>
+    <ol>
+        {% for key, value in _context  %}
+            <li>{{ key }}</li>
+        {% endfor %}
+    </ol>#}
+    <div class="col-sm-12">{{ search }}</div>
+
+</div>
