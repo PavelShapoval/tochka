@@ -1,0 +1,678 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-module" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i>{{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-module" class="form-horizontal">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="input-data-feed" style="display: none">{{ text_import }}</label>
+                        <div class="col-sm-10" style="display: none">
+                            <div class="input-group">
+                                <input type="text" name="xml_link" value="{{ xml_import_link }}" placeholder="" id="input-xml-link" class="form-control" />
+                                <span class="input-group-btn"><button type="button" id="btn-import-xml"  title="{{ text_tips_import }}" class="btn btn-primary"><i class="fa fa-download"></i></button></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+
+                        <div class="col-sm-10">
+                            <select name="module_xml_module_status" id="input-status" class="form-control">
+                                {% if module_xml_module_status %}
+                                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                                    <option value="0">{{ text_enabled }}</option>
+                                {% else %}
+                                    <option value="1">{{ text_enabled }}</option>
+                                    <option value="0" selected="selected">{{ text_enabled }}</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                    </div>
+
+
+                    <hr>
+
+                    <div id="loader"
+                         style="display: none;
+                 position: fixed;
+                 top: 50%;
+                 left: 50%;
+                 background: url(/admin/view/image/loading_csv.gif);
+                 width: 64px;
+                 height: 64px;">
+                    </div>
+                </form>
+
+                <div class="load-data-caption">Статус:</div>
+                <div class="load-data"></div>
+
+                <div class="form-group">
+                    <span class="file-upload"
+                          style="border: 1px solid blue;
+                            padding: 20px;
+                            display: inline-block;
+                            cursor: pointer;
+                            margin-left: 20px">Загрузить файл
+                    </span>
+
+
+                    <span class="data-upload"
+                          style="border: 1px solid blue;
+                            padding: 20px;
+                            display: inline-block;
+                            cursor: pointer;
+                            margin-left: 20px">Загрузка данных
+                    </span>
+                </div>
+
+                <hr style="border-top: 1px solid #000">
+
+                <form class="set_prices" action="{{ action }}" method="post" enctype="multipart/form-data">
+                    <p>Форма увеличения цены по производителю</p>
+                    <label for="manufacturer" style="display: block;">Производитель</label>
+                    <select name="manufacturer" id="manufacturer" style="height: 35px; padding: 5px;">Производители
+                        {% for manufacturer in all_manufacturers %}
+                            <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <label for="percent" style="display: block; margin-top: 20px">Процент</label>
+                    <input type="number" class="percent" placeholder="введите число" name="percent" style="display: block; margin: 10px 0; height: 35px; padding: 5px;">
+                    <input type="button" class="set_prices_submit" value="Увеличить цену" style="height: 30px; display: block; margin-top: 10px;">
+                </form>
+
+                <hr style="border-top: 1px solid #000">
+
+                <form class="set_prices" action="{{ action }}" method="post" enctype="multipart/form-data">
+                    <p>Форма умненьшения цены по производителю</p>
+                    <label for="manufacturer" style="display: block;">Производитель</label>
+                    <select name="manufacturer" id="manufacturer" style="height: 35px; padding: 5px;">Производители
+                        {% for manufacturer in all_manufacturers %}
+                            <option value="{{ manufacturer.manufacturer_id }}">{{ manufacturer.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <label for="percent" style="display: block; margin-top: 20px">Процент</label>
+                    <input type="number" class="percent" placeholder="введите число" name="percent" style="display: block; margin: 10px 0; height: 35px; padding: 5px;">
+                    <input type="button" class="low_prices_submit" value="Уменьшить цену" style="height: 30px; display: block; margin-top: 10px;">
+                </form>
+                <style>
+                    .set_prices_submit,
+                    .low_prices_submit{
+                        color: #fff;
+                        background: #006ecd;
+                    }
+                    .set_prices_submit:hover,
+                    .low_prices_submit:hover{
+                        color: #fff;
+                        background: #2a8ee4;
+                    }
+                </style>
+
+                <hr style="border-top: 1px solid #000">
+
+                {#<form class="disable_updates" action="{{ action }}" method="post" enctype="multipart/form-data">
+                    <p>Сбросить записи в базе данных</p>
+                    <input type="button" class="disable_updates_submit" value="Сбросить записи в базе данных" style="height: 30px; display: block; margin-top: 10px;">
+                </form>
+                <style>
+                    .set_prices_submit,
+                    .low_prices_submit{
+                        color: #fff;
+                        background: #006ecd;
+                    }
+                    .set_prices_submit:hover,
+                    .low_prices_submit:hover{
+                        color: #fff;
+                        background: #2a8ee4;
+                    }
+                </style>#}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function (e) {
+        //e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/update_prices/check_status_now&user_token={{ user_token }}',
+            //type: 'POST',
+            //dataType: 'json',
+            data: $load_prodat,
+            cache: false,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+        })
+            /*.done(function(response) {
+                console.log(response);
+
+                //count.text(response);
+            })*/
+            .success(function(responce){
+                //console.log(responce);
+                $('.load-data').html(responce);
+            })
+            .fail(function(data) {
+                alert('Ошибка.');
+                //console.log(data);
+            })
+            .always(function(data) {
+                //console.log(data);
+            });
+
+    });
+
+</script>
+<script type="text/javascript">
+
+    $('#btn-import-xml').on('click', function() {
+        var url = '';
+        $("input[name='xml_link']").each(function() {
+            url = this.value;
+        });
+        console.log(url);
+
+        if(url.length > 10) {
+            $.ajax({
+                url: 'index.php?route=extension/module/xml_module/import_xml&user_token={{ user_token }}',
+                type: 'post',
+                data: 'xml_url=' + encodeURIComponent(url),
+                dataType: 'json',
+                beforeSend: function() {
+                    $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + 'Loading...' + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                },
+                complete: function() {
+                    // $('.alert-dismissible').remove();
+                },
+                success: function(json) {
+                    $('.alert-dismissible').remove();
+
+                    // Check for errors
+                    if (json['error']) {
+                        $('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    }
+
+                    if (json['success']) {
+                        $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }else {
+            alert("something unlike url!");
+        }
+
+
+    });
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).on('click', '.start', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/import_prodat&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+            })
+            .always(function() {
+                console.log("complete22");
+            });
+    });
+
+    $(document).on('click', '.file-upload', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/update_prices/file_upload&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Файл успешно загружен.');
+            })
+            .fail(function() {
+                alert('Ошибка загрузки.');
+                console.log("error11");
+            })
+            .always(function() {
+                console.log("complete22");
+            });
+    });
+
+    $(document).on('click', '.data-upload', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/update_prices/data_upload&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно загружены.');
+                $('.load-data').html('<span style="color: red">данные загружаются в базу</span>');
+
+            })
+            .fail(function() {
+                alert('Ошибка загрузки.');
+                $('.load-data').html('<span style="color: red">данные загружаются в базу, дождитесь окончания текущей загрузки</span>');
+                console.log("error11");
+            })
+            .always(function() {
+                console.log("complete22");
+            });
+    });
+
+    $(document).on('click', '.start-manufacturer', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/import_manufacturer&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+            })
+            .always(function() {
+                console.log("complete22");
+            });
+    });
+
+    $(document).on('click', '.start-manufacturer-id', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/import_manufacturer_id&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+            })
+            .always(function() {
+                console.log("complete22");
+            });
+    });
+
+
+    $(document).on('click', '.start-update-time', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/import_update_time&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+            })
+            .always(function() {
+                console.log("complete22");
+            });
+    });
+
+    $(document).on('click', '.update-properties', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+        //var start = 50;
+        //var loop = 100;
+
+
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/update_properties&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {start: start, loop: loop, $load_prodat},
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+                alert('ошибка.');
+            })
+            .always(function() {
+                //console.log("complete22");
+                alert('Данные отправляются.');
+            });
+    });
+
+    $(document).on('click', '.update-descriptions', function (e) {
+        e.preventDefault();
+        $load_prodat = true;
+        $load_pricat = true;
+        //var start = 50;
+        //var loop = 100;
+
+
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/update_descriptions&user_token={{ user_token }}',
+            type: 'POST',
+            dataType: 'text',
+            data: $load_prodat,
+            //data: {start: start, loop: loop, $load_prodat},
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+                alert('ошибка.');
+            })
+            .always(function() {
+                //console.log("complete22");
+                alert('Данные отправляются.');
+            });
+    });
+    $('.set_filters_submit').on('click', function (e) {
+        e.preventDefault();
+        var form_data = $(this).parent('form').serialize();
+        //console.log(form_data);
+        $.ajax({
+            url: 'index.php?route=extension/module/xml_module/update_filters&user_token={{ user_token }}',
+            type: 'POST',
+            //dataType: 'text',
+            data: form_data,
+            //data: {start: start, loop: loop, $load_prodat},
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(){
+                alert('Данные успешно отправлены.');
+            })
+            .fail(function() {
+                console.log("error11");
+                alert('ошибка.');
+            })
+            .always(function() {
+                //console.log("complete22");
+                alert('Данные отправляются.');
+            });
+    });
+
+    $('.set_prices_submit').on('click', function (e) {
+        e.preventDefault();
+        var form_data = $(this).parent('form').serialize();
+
+        //var form_data = $(this).parent('form').find('#manufacturer').val();
+        //console.log(form_data);
+        $.ajax({
+            url: 'index.php?route=extension/module/update_prices/update_prices_up&user_token={{ user_token }}',
+            type: 'POST',
+            //dataType: 'text',
+            data: form_data,
+            //data: {start: start, loop: loop, $load_prodat},
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(response){
+                alert(response);
+            })
+            .fail(function() {
+                console.log("error11");
+                alert('ошибка.');
+            })
+            .always(function() {
+                //console.log("complete22");
+                alert('Данные отправляются.');
+            });
+    });
+
+
+    $('.low_prices_submit').on('click', function (e) {
+        e.preventDefault();
+        var form_data = $(this).parent('form').serialize();
+
+        //var form_data = $(this).parent('form').find('#manufacturer').val();
+        //console.log(form_data);
+        $.ajax({
+            url: 'index.php?route=extension/module/update_prices/update_prices_down&user_token={{ user_token }}',
+            type: 'POST',
+            //dataType: 'text',
+            data: form_data,
+            //data: {start: start, loop: loop, $load_prodat},
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(response){
+                alert(response);
+            })
+            .fail(function() {
+                console.log("error11");
+                alert('ошибка.');
+            })
+            .always(function() {
+                //console.log("complete22");
+                alert('Данные отправляются.');
+            });
+    });
+
+    $('.disable_updates_submit').on('click', function (e) {
+        e.preventDefault();
+        var form_data = $(this).parent('form').serialize();
+
+        //var form_data = $(this).parent('form').find('#manufacturer').val();
+        //console.log(form_data);
+        $.ajax({
+            url: 'index.php?route=extension/module/update_prices/disable_updates&user_token={{ user_token }}',
+            type: 'POST',
+            //dataType: 'text',
+            data: form_data,
+            //data: {start: start, loop: loop, $load_prodat},
+            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+            beforeSend: function() {
+                $('#loader').show();
+            },
+            complete: function() {
+                $('#loader').hide();
+            }
+
+        })
+            .done(function(response) {
+                /*console.log("success");*/
+                console.log(response);
+                //count.text(response);
+            })
+            .success(function(response){
+                alert(response);
+            })
+            .fail(function() {
+                console.log("error11");
+                alert('ошибка.');
+            })
+            .always(function() {
+                //console.log("complete22");
+                alert('Данные отправляются.');
+            });
+    });
+</script>
+
+{{ footer }}
