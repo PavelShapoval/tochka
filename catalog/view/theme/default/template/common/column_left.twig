@@ -1,0 +1,8 @@
+{% if modules %}
+<div class="show-sidebar">Развернуть/свернуть подкатегории</div>
+<aside id="column-left" class="col-sm-3 hidden-xs re-collapse">
+  {% for module in modules %}
+  {{ module }}
+  {% endfor %}
+</aside>
+{% endif %}

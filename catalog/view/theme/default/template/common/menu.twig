@@ -1,0 +1,73 @@
+{% if categories %}
+
+  <nav id="menu" class="navbar">
+    <div class="navbar-header"><span id="category" class="visible-xs">{{ text_category }}</span>
+      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><i class="fa fa-bars"></i></button>
+    </div>
+      <div class="container">
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div class="menu-wrap">
+            <div class="cat-wrap menu-item-new"><span class="catalog-name">Каталог</span>
+              <ul class="nav navbar-nav category-all">
+                {% for category in categories %}
+                {% if category.children %}
+                <li class="dropdown">
+                    <span class="go">
+                        <a href="{{ category.href }}">
+                            <img src="/catalog/view/theme/default/image/right-arrow.png" alt=""></a>
+                    </span>
+                    <a href="{{ category.href }}" class="dropdown-toggle parent-item" data-toggle="dropdown">{{ category.name }}</a>
+                    {#<a href="{{ category.href }}">{{ category.name }}</a>#}
+                  <div class="dropdown-menu">
+                    <div class="dropdown-inner"> {% for children in category.children|batch(category.children|length / category.column|round(1, 'ceil')) %}
+                      <ul class="list-unstyled">
+                        {% for child in children %}
+                        <li><a href="{{ child.href }}">{{ child.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                      {% endfor %}</div>
+                    {#<a href="{{ category.href }}" class="see-all">{{ text_all }} {{ category.name }}</a>#} </div>
+                </li>
+                {% else %}
+                <li><a href="{{ category.href }}">{{ category.name }}</a></li>
+                {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="menu-item-new">
+                <div class="catalog-name other-items">
+                    <a href="/o-kompanii">О компании</a>
+                    <div class="dropdown-other">
+                        <ul class="ul-other">
+                            <li class=""><a href="/rekviziti" class="">Реквизиты</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item-new">
+                <div class="catalog-name other-items">Как купить?
+                    <div class="dropdown-other">
+                        <ul class="ul-other">
+                            <li><a href="/doctavka-i-oplata">Доставка и оплата</a></li>
+                            <li><a href="/vozvrat-i-obmen-garantiya">Возврат и обмен. Гарантия</a></li>
+                            <li><a href="/politika-konfidencialnosti">Политика конфиденциальности</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-item-new">
+                <div class="catalog-name other-items">
+                    <a href="/akcii">Акции</a>
+                </div>
+            </div>
+            <div class="menu-item-new">
+                <div class="catalog-name other-items">
+                    <a href="/kontakti">Контакты</a>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+  </nav>
+
+{% endif %} 

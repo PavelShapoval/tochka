@@ -1,0 +1,38 @@
+<form action="{{ action }}" method="post">
+      {% for k, v in payform_data.data %}
+        {% if k == 'products' %}
+          {% for k2, v2 in v %}
+            {% for k3, v3 in v2 %}
+              <input type="hidden" name="{{k|escape}}[{{k2|escape}}][{{k3|escape}}]" value="{{v3|escape}}" />
+            {% endfor %}
+          {% endfor %}
+        {% else %}
+          <input type="hidden" name="{{k|escape}}" value="{{v|escape}}" />
+        {% endif %}
+      {% endfor %}
+<div class="buttons">
+    <div class="pull-right">
+      <input type="button" value="{{ button_confirm}}" id="button-confirm" class="btn btn-primary" data-loading-text="{{ text_loading}}" />
+    </div>
+  </div>
+</form>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		type: 'get',
+		url: '{{ confirm}}',
+		cache: false,
+		beforeSend: function() {
+			$('#button-confirm').button('loading');
+		},
+		complete: function() {
+			$('#button-confirm').button('reset');
+		},
+		success: function() {
+			// location = '{{ continue }}';
+      console.log("location = '{{ continue }}'");
+		}
+	});
+  this.form.submit();
+});
+//--></script>
