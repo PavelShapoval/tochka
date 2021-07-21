@@ -73,6 +73,20 @@ class ControllerExtensionModuleUpdatePrices extends Controller {
 		//$data['export_xml'] = (HTTPS_SERVER . 'controller/update_prices/export.php');
 		$data['all_manufacturers'] = $this->show_all_manufacturers();
 
+		$table_data = $this->check_table();
+		$table_rows = [];
+		$k = 0;
+		foreach($table_data as $item){
+			$manufacturer_name = $this->model_extension_module_update_prices->get_manufacturer_name($item["manufacturer_id"]);
+			$table_rows[$k] = [
+				'name' => $manufacturer_name['name'],
+				'percent' => $item['percent'],
+				'side' => $item['side']
+			];
+			$k++;
+		}
+		$data['table_data'] = $table_rows;
+
 		$this->response->setOutput($this->load->view('extension/module/update_prices', $data));
 
 		//
@@ -115,6 +129,7 @@ class ControllerExtensionModuleUpdatePrices extends Controller {
 		}
 
 		$manufacturer_id = $_POST['manufacturer'];
+		$this->model_extension_module_update_prices->clean_before_write($manufacturer_id);
 		$this->model_extension_module_update_prices->write_updates_up($manufacturer_id, $persent);
 
 
@@ -139,6 +154,7 @@ class ControllerExtensionModuleUpdatePrices extends Controller {
 		}
 
 		$manufacturer_id = $_POST['manufacturer'];
+		$this->model_extension_module_update_prices->clean_before_write($manufacturer_id);
 		$this->model_extension_module_update_prices->write_updates_down($manufacturer_id, $persent);
 	}
 
@@ -146,6 +162,12 @@ class ControllerExtensionModuleUpdatePrices extends Controller {
 	public function disable_updates(){
 		$this->load->model('extension/module/update_prices');
 		$this->model_extension_module_update_prices->disable_updates_clean_table();
+	}
+
+	public function check_table(){
+		$this->load->model('extension/module/update_prices');
+		$data = $this->model_extension_module_update_prices->check_percents_table();
+		return $data;
 	}
 
 

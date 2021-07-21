@@ -142,9 +142,34 @@
 
                 <hr style="border-top: 1px solid #000">
 
-                {#<form class="disable_updates" action="{{ action }}" method="post" enctype="multipart/form-data">
-                    <p>Сбросить записи в базе данных</p>
-                    <input type="button" class="disable_updates_submit" value="Сбросить записи в базе данных" style="height: 30px; display: block; margin-top: 10px;">
+                {% if table_data %}
+                <table class="manufacturer_table">
+                    <tr>
+                    <th>MANUFACTURER</th>
+                    <th>PERCENT</th>
+                    <th>SIDE</th>
+                    </tr>
+                {% for data in table_data %}
+                    <tr>
+                        <td>{{ data.name }}</td>
+                        <td>{{ data.percent * 100 }}</td>
+                        <td>{{ data.side }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+
+                <style>
+                    .manufacturer_table td,
+                    .manufacturer_table th{
+                        padding: 10px;
+                    }
+                </style>
+                {% else %}
+                    <p>Нет установленных наценок / скидок</p>
+                {% endif %}
+
+                <form class="disable_updates" action="{{ action }}" method="post" enctype="multipart/form-data">
+                    <input type="button" class="disable_updates_submit" value="Очистить данные" style="height: 30px; display: block; margin-top: 10px;">
                 </form>
                 <style>
                     .set_prices_submit,
@@ -157,7 +182,7 @@
                         color: #fff;
                         background: #2a8ee4;
                     }
-                </style>#}
+                </style>
             </div>
         </div>
     </div>
@@ -635,43 +660,57 @@
             });
     });
 
+    /*function confirmDelete() {
+        if (confirm("Вы подтверждаете удаление?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }*/
+
+
     $('.disable_updates_submit').on('click', function (e) {
         e.preventDefault();
-        var form_data = $(this).parent('form').serialize();
+        //confirmDelete();
+        if (confirm("Вы подтверждаете удаление?")) {
+            var form_data = $(this).parent('form').serialize();
 
-        //var form_data = $(this).parent('form').find('#manufacturer').val();
-        //console.log(form_data);
-        $.ajax({
-            url: 'index.php?route=extension/module/update_prices/disable_updates&user_token={{ user_token }}',
-            type: 'POST',
-            //dataType: 'text',
-            data: form_data,
-            //data: {start: start, loop: loop, $load_prodat},
-            //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
-            beforeSend: function() {
-                $('#loader').show();
-            },
-            complete: function() {
-                $('#loader').hide();
-            }
+            //var form_data = $(this).parent('form').find('#manufacturer').val();
+            //console.log(form_data);
+            $.ajax({
+                url: 'index.php?route=extension/module/update_prices/disable_updates&user_token={{ user_token }}',
+                type: 'POST',
+                //dataType: 'text',
+                data: form_data,
+                //data: {start: start, loop: loop, $load_prodat},
+                //data: {cart_item_key: cart_item_key, data_product_id: data_product_id}
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                complete: function() {
+                    $('#loader').hide();
+                }
 
-        })
-            .done(function(response) {
-                /*console.log("success");*/
-                console.log(response);
-                //count.text(response);
             })
-            .success(function(response){
-                alert(response);
-            })
-            .fail(function() {
-                console.log("error11");
-                alert('ошибка.');
-            })
-            .always(function() {
-                //console.log("complete22");
-                alert('Данные отправляются.');
-            });
+                .done(function(response) {
+                    /*console.log("success");*/
+                    console.log(response);
+                    //count.text(response);
+                })
+                .success(function(response){
+                    alert(response);
+                })
+                .fail(function() {
+                    console.log("error11");
+                    alert('ошибка.');
+                })
+                .always(function() {
+                    //console.log("complete22");
+                    alert('Данные отправляются.');
+                });
+        } else {
+            return false;
+        }
     });
 </script>
 

@@ -27,7 +27,7 @@ class ModelExtensionModuleUpdatePrices extends Model {
 	}
 
 	public function write_updates_up($manufacturer_id, $percent){
-		$sql  = "REPLACE `".DB_PREFIX."prices_updates` SET `manufacturer_id`=".$manufacturer_id.", `percent` = ".$percent."";
+		$sql  = "REPLACE `".DB_PREFIX."prices_updates` SET `manufacturer_id`=".$manufacturer_id.", `percent` = ".$percent.", `side` = 'up'";
 		$this->db->query($sql);
 	}
 
@@ -42,7 +42,12 @@ class ModelExtensionModuleUpdatePrices extends Model {
 	}
 
 	public function write_updates_down($manufacturer_id, $percent){
-		$sql  = "REPLACE `".DB_PREFIX."prices_updates` SET `manufacturer_id`=".$manufacturer_id.", `percent` = ".$percent."";
+		$sql  = "REPLACE `".DB_PREFIX."prices_updates` SET `manufacturer_id`=".$manufacturer_id.", `percent` = ".$percent.", `side` = 'down'";
+		$this->db->query($sql);
+	}
+
+	public function clean_before_write($manufacturer_id){
+		$sql  = "DELETE FROM `".DB_PREFIX."prices_updates` WHERE `manufacturer_id`=".$manufacturer_id;
 		$this->db->query($sql);
 	}
 
@@ -64,6 +69,16 @@ class ModelExtensionModuleUpdatePrices extends Model {
 	public function check_status(){
 		$query =  $this->db->query("SELECT `upc` , `quantity`, `price` FROM ".DB_PREFIX."temp_products");
 		return $query->rows;
+	}
+
+	public function check_percents_table(){
+		$query =  $this->db->query("SELECT `manufacturer_id` , `percent`, `side` FROM ".DB_PREFIX."prices_updates");
+		return $query->rows;
+	}
+
+	public function get_manufacturer_name($manufacturer_id){
+		$query = $this->db->query("SELECT `name` FROM ".DB_PREFIX."manufacturer WHERE `manufacturer_id` = ".$manufacturer_id);
+		return $query->row;
 	}
 
 
