@@ -56,6 +56,11 @@ class ModelExtensionModuleUpdatePrices extends Model {
 		$this->db->query($sql);
 	}
 
+	public function disable_persents(){
+		$sql  = "UPDATE `".DB_PREFIX."product` SET `percent_up` = 0, `percent_down` = 0";
+		$this->db->query($sql);
+	}
+
 	public function check_temp_table(){
 		$query = $this->db->query("SELECT `upc` , `quantity`, `price` FROM ".DB_PREFIX."temp_products WHERE `updated` != '' LIMIT 500 ");
 		return $query->rows;

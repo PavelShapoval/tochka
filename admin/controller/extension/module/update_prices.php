@@ -162,6 +162,7 @@ class ControllerExtensionModuleUpdatePrices extends Controller {
 	public function disable_updates(){
 		$this->load->model('extension/module/update_prices');
 		$this->model_extension_module_update_prices->disable_updates_clean_table();
+		$this->model_extension_module_update_prices->disable_persents();
 	}
 
 	public function check_table(){
